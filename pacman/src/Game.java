@@ -16,8 +16,8 @@ public class Game extends GameGrid
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
 
   protected PacMan PacMan = new PacMan(this);
-  private Monster troll = new Monster(this, MonsterType.Troll);
-  private Monster tx5 = new Monster(this, MonsterType.TX5);
+  private Monster troll = new Troll(this);
+  private Monster tx5 = new Tx5(this);
 
 
   private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
