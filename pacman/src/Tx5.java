@@ -11,7 +11,7 @@ public class Tx5 extends Monster {
 
     @Override
     protected void walkApproach() {
-        Location pacLocation = game.PacMan.getLocation();
+        Location pacLocation = game.pacMan.getLocation();
         double oldDirection = getDirection();
 
         // Walking approach:
