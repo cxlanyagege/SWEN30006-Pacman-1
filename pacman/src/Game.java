@@ -16,8 +16,9 @@ public class Game extends GameGrid
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
 
   protected PacMan PacMan = new PacMan(this);
-  private Monster troll = new Troll(this);
-  private Monster tx5 = new Tx5(this);
+  private final Monster troll = new Troll(this);
+  private final Monster tx5 = new Tx5(this);
+  private Monster orion = new Orion(this);
 
 
   private ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
@@ -51,10 +52,12 @@ public class Game extends GameGrid
     PacMan.setSeed(seed);
     troll.setSeed(seed);
     tx5.setSeed(seed);
+    orion.setSeed(seed);
     addKeyRepeatListener(PacMan);
     setKeyRepeatPeriod(150);
     troll.setSlowDown(3);
     tx5.setSlowDown(3);
+    orion.setSlowDown(3);
     PacMan.setSlowDown(3);
     tx5.stopMoving(5);
     setupActorLocations();
@@ -82,6 +85,7 @@ public class Game extends GameGrid
     Location loc = PacMan.getLocation();
     troll.setStopMoving(true);
     tx5.setStopMoving(true);
+    orion.setStopMoving(true);
     PacMan.removeSelf();
 
     String title = "";
@@ -106,6 +110,7 @@ public class Game extends GameGrid
   private void setupActorLocations() {
     String[] trollLocations = this.properties.getProperty("Troll.location").split(",");
     String[] tx5Locations = this.properties.getProperty("TX5.location").split(",");
+    String[] orionLocations = this.properties.getProperty("Orion.location").split(",");
     String[] pacManLocations = this.properties.getProperty("PacMan.location").split(",");
     int trollX = Integer.parseInt(trollLocations[0]);
     int trollY = Integer.parseInt(trollLocations[1]);
@@ -113,12 +118,16 @@ public class Game extends GameGrid
     int tx5X = Integer.parseInt(tx5Locations[0]);
     int tx5Y = Integer.parseInt(tx5Locations[1]);
 
+    int orionX = Integer.parseInt(orionLocations[0]);
+    int orionY = Integer.parseInt(orionLocations[1]);
+
     int pacManX = Integer.parseInt(pacManLocations[0]);
     int pacManY = Integer.parseInt(pacManLocations[1]);
 
     addActor(troll, new Location(trollX, trollY), Location.NORTH);
-    addActor(PacMan, new Location(pacManX, pacManY));
     addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
+    addActor(orion, new Location(orionX, orionY), Location.NORTH);
+    addActor(PacMan, new Location(pacManX, pacManY));
   }
 
   private int countPillsAndItems() {
