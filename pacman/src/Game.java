@@ -15,7 +15,7 @@
 //  private final static int nbVertCells = 11;
 //  protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
 //
-//  protected PacActor pacActor = new PacActor(this);
+//  protected pacMan = new pacMan(this);
 //  private Monster troll = new Monster(this, MonsterType.Troll);
 //  private Monster tx5 = new Monster(this, MonsterType.TX5);
 //
@@ -39,8 +39,8 @@
 //    setTitle("[PacMan in the Multiverse]");
 //
 //    //Setup for auto test
-//    pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
-//    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
+//    pacMan.setPropertyMoves(properties.getProperty("PacMan.move"));
+//    pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
 //    loadPillAndItemsLocations();
 //
 //    GGBackground bg = getBg();
@@ -48,14 +48,14 @@
 //
 //    //Setup Random seeds
 //    seed = Integer.parseInt(properties.getProperty("seed"));
-//    pacActor.setSeed(seed);
+//    pacMan.setSeed(seed);
 //    troll.setSeed(seed);
 //    tx5.setSeed(seed);
-//    addKeyRepeatListener(pacActor);
+//    addKeyRepeatListener pacMan);
 //    setKeyRepeatPeriod(150);
 //    troll.setSlowDown(3);
 //    tx5.setSlowDown(3);
-//    pacActor.setSlowDown(3);
+//    pacMan.setSlowDown(3);
 //    tx5.stopMoving(5);
 //    setupActorLocations();
 //
@@ -72,17 +72,17 @@
 //    int maxPillsAndItems = countPillsAndItems();
 //
 //    do {
-//      hasPacmanBeenHit = troll.getLocation().equals(pacActor.getLocation()) ||
-//              tx5.getLocation().equals(pacActor.getLocation());
-//      hasPacmanEatAllPills = pacActor.getNbPills() >= maxPillsAndItems;
+//      hasPacmanBeenHit = troll.getLocation().equals pacMan.getLocation()) ||
+//              tx5.getLocation().equals pacMan.getLocation());
+//      hasPacmanEatAllPills = pacMan.getNbPills() >= maxPillsAndItems;
 //      delay(10);
 //    } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
 //    delay(120);
 //
-//    Location loc = pacActor.getLocation();
+//    Location loc = pacMan.getLocation();
 //    troll.setStopMoving(true);
 //    tx5.setStopMoving(true);
-//    pacActor.removeSelf();
+//    pacMan.removeSelf();
 //
 //    String title = "";
 //    if (hasPacmanBeenHit) {
@@ -117,7 +117,7 @@
 //    int pacManY = Integer.parseInt(pacManLocations[1]);
 //
 //    addActor(troll, new Location(trollX, trollY), Location.NORTH);
-//    addActor(pacActor, new Location(pacManX, pacManY));
+//    addActor pacMan, new Location(pacManX, pacManY));
 //    addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
 //  }
 //
@@ -293,10 +293,10 @@ public abstract class Game extends GameGrid{
   protected final static int nbHorzCells = 20;
   protected final static int nbVertCells = 11;
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
-
-  protected PacActor pacActor = new PacActor(this);
-  protected Monster troll = new Monster(this, MonsterType.Troll);
-  protected Monster tx5 = new Monster(this, MonsterType.TX5);
+  // modified
+  protected PacMan pacMan = new PacMan(this);
+  protected Monster troll = new Troll(this);
+  protected Monster tx5 = new Tx5(this);
 
   protected ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
   protected ArrayList<Actor> iceCubes = new ArrayList<Actor>();
@@ -316,24 +316,20 @@ public abstract class Game extends GameGrid{
     setSimulationPeriod(100);
     setTitle("[PacMan in the Multiverse]");
 
-    //Setup for auto test
-    pacActor.setPropertyMoves(properties.getProperty("PacMan.move"));
-    pacActor.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
+    //Setup for auto test pacMan.setPropertyMoves(properties.getProperty("PacMan.move")); pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
     loadPillAndItemsLocations();
 
     GGBackground bg = getBg();
     drawGrid(bg);
 
     //Setup Random seeds
-    seed = Integer.parseInt(properties.getProperty("seed"));
-    pacActor.setSeed(seed);
+    seed = Integer.parseInt(properties.getProperty("seed")); pacMan.setSeed(seed);
     troll.setSeed(seed);
     tx5.setSeed(seed);
-    addKeyRepeatListener(pacActor);
+    addKeyRepeatListener (pacMan);
     setKeyRepeatPeriod(150);
     troll.setSlowDown(3);
-    tx5.setSlowDown(3);
-    pacActor.setSlowDown(3);
+    tx5.setSlowDown(3); Game.this.pacMan.setSlowDown(3);
     tx5.stopMoving(5);
     setupActorLocations();
 
@@ -350,17 +346,16 @@ public abstract class Game extends GameGrid{
     int maxPillsAndItems = countPillsAndItems();
 
     do {
-      hasPacmanBeenHit = troll.getLocation().equals(pacActor.getLocation()) ||
-              tx5.getLocation().equals(pacActor.getLocation());
-      hasPacmanEatAllPills = pacActor.getNbPills() >= maxPillsAndItems;
+      hasPacmanBeenHit = troll.getLocation().equals( Game.this.pacMan.getLocation()) ||
+              tx5.getLocation().equals (Game.this.pacMan.getLocation());
+      hasPacmanEatAllPills = Game.this.pacMan.getNbPills() >= maxPillsAndItems;
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
     delay(120);
 
-    Location loc = pacActor.getLocation();
+    Location loc = Game.this.pacMan.getLocation();
     troll.setStopMoving(true);
-    tx5.setStopMoving(true);
-    pacActor.removeSelf();
+    tx5.setStopMoving(true); Game.this.pacMan.removeSelf();
 
     String title = "";
     if (hasPacmanBeenHit) {
