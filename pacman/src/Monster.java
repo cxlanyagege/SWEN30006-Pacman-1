@@ -6,16 +6,18 @@ import ch.aplu.jgamegrid.*;
 import java.awt.Color;
 import java.util.*;
 
-public class Monster extends PacActor {
-  //private Game game;
+public class Monster extends Actor
+{
+  private Game game;
   private MonsterType type;
-  //private ArrayList<Location> visitedList = new ArrayList<Location>();
-  //private final int listLength = 10;
+  private ArrayList<Location> visitedList = new ArrayList<Location>();
+  private final int listLength = 10;
   private boolean stopMoving = false;
-  //private int seed = 0;
-  //private Random randomiser = new Random(0);
+  private int seed = 0;
+  private Random randomiser = new Random(0);
 
-  public Monster(Game game, MonsterType type) {
+  public Monster(Game game, MonsterType type)
+  {
     super("sprites/" + type.getImageName());
     this.game = game;
     this.type = type;
@@ -34,17 +36,17 @@ public class Monster extends PacActor {
     }, seconds * SECOND_TO_MILLISECONDS);
   }
 
-  /*
-    public void setSeed(int seed) {
-      this.seed = seed;
-      randomiser.setSeed(seed);
-    }
-  */
+  public void setSeed(int seed) {
+    this.seed = seed;
+    randomiser.setSeed(seed);
+  }
+
   public void setStopMoving(boolean stopMoving) {
     this.stopMoving = stopMoving;
   }
 
-  public void act() {
+  public void act()
+  {
     if (stopMoving) {
       return;
     }
@@ -55,41 +57,53 @@ public class Monster extends PacActor {
       setHorzMirror(true);
   }
 
-  private void walkApproach() {
-    Location pacLocation = game.PacMan.getLocation();
+  private void walkApproach()
+  {
+    Location pacLocation = game.pacActor.getLocation();
     double oldDirection = getDirection();
 
     // Walking approach:
     // TX5: Determine direction to pacActor and try to move in that direction. Otherwise, random walk.
     // Troll: Random walk.
     Location.CompassDirection compassDir =
-            getLocation().get4CompassDirectionTo(pacLocation);
+      getLocation().get4CompassDirectionTo(pacLocation);
     Location next = getLocation().getNeighbourLocation(compassDir);
     setDirection(compassDir);
     if (type == MonsterType.TX5 &&
-            !isVisited(next) && canMove(next)) {
+      !isVisited(next) && canMove(next))
+    {
       setLocation(next);
-    } else {
+    }
+    else
+    {
       // Random walk
       int sign = randomiser.nextDouble() < 0.5 ? 1 : -1;
       setDirection(oldDirection);
       turn(sign * 90);  // Try to turn left/right
       next = getNextMoveLocation();
-      if (canMove(next)) {
+      if (canMove(next))
+      {
         setLocation(next);
-      } else {
+      }
+      else
+      {
         setDirection(oldDirection);
         next = getNextMoveLocation();
         if (canMove(next)) // Try to move forward
         {
           setLocation(next);
-        } else {
+        }
+        else
+        {
           setDirection(oldDirection);
           turn(-sign * 90);  // Try to turn right/left
           next = getNextMoveLocation();
-          if (canMove(next)) {
+          if (canMove(next))
+          {
             setLocation(next);
-          } else {
+          }
+          else
+          {
 
             setDirection(oldDirection);
             turn(180);  // Turn backward
@@ -106,9 +120,7 @@ public class Monster extends PacActor {
   public MonsterType getType() {
     return type;
   }
-}
 
-/*
   private void addVisitedList(Location location)
   {
     visitedList.add(location);
@@ -134,4 +146,3 @@ public class Monster extends PacActor {
       return true;
   }
 }
-*/
