@@ -8,16 +8,19 @@ import java.util.Random;
 public class Orion extends Monster {
     private final Game game;
     private ArrayList<Location> goldLocation;
+
     public Orion(Game game) {
         super(game, MonsterType.Orion);
         this.game = game;
-        goldLocation = game.getGoldLocation();
+        //goldLocation = game.getGoldLocation();
     }
 
     @Override
     protected void walkApproach() {
         Random random = new Random();
-        Location gold = goldLocation.get(random.nextInt(goldLocation.toArray().length));
+        goldLocation = game.getGoldLocation();
+
+        Location gold = goldLocation.get(random.nextInt(goldLocation.size()));
 
         double oldDirection = getDirection();
 

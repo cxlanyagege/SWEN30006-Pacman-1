@@ -31,7 +31,7 @@ import src.utility.PropertiesLoader;
 import java.util.Properties;
 
 public class Driver {
-    public static final String DEFAULT_PROPERTIES_PATH = "pacman/properties/test1.properties";
+    public static final String DEFAULT_PROPERTIES_PATH = "pacman/properties/test5.properties";
 
     /**
      * Starting point
@@ -52,6 +52,7 @@ public class Driver {
         };
 
         String gameVersion = properties.getProperty("version");
+        //System.out.println(gameVersion);
         if (gameVersion == null) {
             throw new RuntimeException("Game version not specified in properties file.");
         }
@@ -61,6 +62,7 @@ public class Driver {
             game = new SimpleGame(gameCallback, properties);
         } else if (gameVersion.equals("multiverse")) {
             game = new MultiverseGame(gameCallback, properties);
+            System.out.println(game);
         } else {
             throw new RuntimeException("Invalid game version specified in properties file.");
         }

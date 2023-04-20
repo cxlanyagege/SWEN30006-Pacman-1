@@ -297,6 +297,10 @@ public abstract class Game extends GameGrid{
   protected PacMan pacMan = new PacMan(this);
   protected Monster troll = new Troll(this);
   protected Monster tx5 = new Tx5(this);
+  protected  Monster orion = new Orion(this);
+  protected  Monster alien = new Alien(this);
+  protected  Monster wizard = new Wizard(this);
+
 
   protected ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
   protected ArrayList<Actor> iceCubes = new ArrayList<Actor>();
@@ -306,6 +310,7 @@ public abstract class Game extends GameGrid{
   protected int seed = 30006;
   protected ArrayList<Location> propertyPillLocations = new ArrayList<>();
   protected ArrayList<Location> propertyGoldLocations = new ArrayList<>();
+  protected ArrayList<Location> goldLocations = new ArrayList<>();
 
 
   public Game(GameCallback gameCallback, Properties properties) {
@@ -323,13 +328,18 @@ public abstract class Game extends GameGrid{
     drawGrid(bg);
 
     //Setup Random seeds
-    seed = Integer.parseInt(properties.getProperty("seed")); pacMan.setSeed(seed);
+    seed = Integer.parseInt(properties.getProperty("seed"));
+    pacMan.setSeed(seed);
     troll.setSeed(seed);
     tx5.setSeed(seed);
+    orion.setSeed(seed);
     addKeyRepeatListener (pacMan);
     setKeyRepeatPeriod(150);
-    troll.setSlowDown(3);
-    tx5.setSlowDown(3); Game.this.pacMan.setSlowDown(3);
+    troll.setSlowDown(10);
+    alien.setSlowDown(10);
+    orion.setSlowDown(10);
+    tx5.setSlowDown(10);
+    Game.this.pacMan.setSlowDown(3);
     tx5.stopMoving(5);
     setupActorLocations();
 
@@ -347,7 +357,7 @@ public abstract class Game extends GameGrid{
 
     do {
       hasPacmanBeenHit = troll.getLocation().equals( Game.this.pacMan.getLocation()) ||
-              tx5.getLocation().equals (Game.this.pacMan.getLocation());
+              tx5.getLocation().equals (Game.this.pacMan.getLocation())||orion.getLocation().equals(Game.this.pacMan.getLocation())||alien.getLocation().equals( Game.this.pacMan.getLocation()) ;
       hasPacmanEatAllPills = Game.this.pacMan.getNbPills() >= maxPillsAndItems;
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
@@ -402,6 +412,7 @@ public abstract class Game extends GameGrid{
     }
 
     String goldLocationString = properties.getProperty("Gold.location");
+    //System.out.println(goldLocationString);
     if (goldLocationString != null) {
       String[] singleGoldLocationStrings = goldLocationString.split(";");
       for (String singleGoldLocationString : singleGoldLocationStrings) {
@@ -421,6 +432,8 @@ public abstract class Game extends GameGrid{
         }
         if (a == 3 && propertyGoldLocations.size() == 0) {
           pillAndItemLocations.add(location);
+          goldLocations.add(location);
+          System.out.println(goldLocations);
         }
         if (a == 4) {
           pillAndItemLocations.add(location);
@@ -504,7 +517,14 @@ public abstract class Game extends GameGrid{
   }
 
   public ArrayList<Location> getGoldLocation() {
-    return propertyGoldLocations;
+    //return propertyGoldLocations;
+    if(propertyGoldLocations.size() == 0){
+      return goldLocations;
+    }else{
+      return propertyGoldLocations;
+    }
+
+
   }
 
 }

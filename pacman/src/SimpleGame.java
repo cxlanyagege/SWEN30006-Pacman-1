@@ -27,7 +27,9 @@ public class SimpleGame extends Game {
         // int orionX = Integer.parseInt(orionLocations[0]);
         // int orionY = Integer.parseInt(orionLocations[1]);
         int pacManX = Integer.parseInt(pacManLocations[0]);int pacManY = Integer.parseInt(pacManLocations[1]);
-        addActor(troll, new Location(trollX, trollY), Location.NORTH);addActor(pacMan, new Location(pacManX, pacManY));addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
+        addActor(troll, new Location(trollX, trollY), Location.NORTH);
+        addActor(pacMan, new Location(pacManX, pacManY));
+        addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
 
 
     }
@@ -55,4 +57,5 @@ public class SimpleGame extends Game {
             }
 
     }
-}}
+}
+}
