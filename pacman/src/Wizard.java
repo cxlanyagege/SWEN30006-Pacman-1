@@ -126,18 +126,24 @@ public class Wizard extends Monster {
 
     @Override
     protected void walkApproach() {
-
+        int a =1;
+        ArrayList<Location> neighbours;
         //double oldDirection = getDirection();
         // Walking approach:
+        if (!game.isFurious()) {
+            neighbours = getLocation().getNeighbourLocations(1);
+        }else{
+            neighbours = getLocation().getNeighbourLocations(2);
+            System.out.println("isFurious");
+        }
 
-        ArrayList<Location> neighbours = getLocation().getNeighbourLocations(1);
         if (!neighbours.isEmpty()) {
             int index = (int) (Math.random() * neighbours.size());
             Location next = neighbours.get(index);// Wizard: Randomly select one of its neighbour locations (8 cells around).
 
             // Check if the selected location is a wall
             if (!canMove(next)) {
-                Location adjacent = next.getAdjacentLocation(getLocation().getDirectionTo(next),1);
+                Location adjacent = next.getAdjacentLocation(getLocation().getDirectionTo(next), 1);
                 // Check if the adjacent location in the same direction is not a wall
                 if (canMove(adjacent)) {
                     next = adjacent;
@@ -151,9 +157,9 @@ public class Wizard extends Monster {
 
             setDirection(getLocation().getDirectionTo(next));
             setLocation(next);
-        }
 
         game.getGameCallback().monsterLocationChanged(this);
+        }
     }
 }
 
