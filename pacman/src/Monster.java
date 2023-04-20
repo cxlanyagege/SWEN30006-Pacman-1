@@ -51,6 +51,7 @@ public abstract class Monster extends PacActor
     if (stopMoving) {
       return;
     }
+
     walkApproach();
     if (getDirection() > 150 && getDirection() < 210)
       setHorzMirror(false);
@@ -60,6 +61,11 @@ public abstract class Monster extends PacActor
 
   protected abstract void walkApproach();
 
+
+  protected void furiousWalkApproach(){
+
+  }
+
   protected Location walkRandom(double oldDirection)
   {
     // Random walk
@@ -67,6 +73,54 @@ public abstract class Monster extends PacActor
     setDirection(oldDirection);
     turn(sign * 90);  // Try to turn left/right
     Location next = getNextMoveLocation();
+    Location next2 = next.getAdjacentLocation(getLocation().getDirectionTo(next),1);
+    if(game.isFurious()){
+      checkMove(next2,oldDirection,sign);
+
+    }else {
+      checkMove(next,oldDirection,sign);
+    }
+
+    //checkMove(next,oldDirection,sign);
+
+//    if (canMove(next))
+//    {
+//      // System.out.println("Turn Left/Right");
+//      setLocation(next);
+//    }
+//    else
+//    {
+//      setDirection(oldDirection);
+//      next = getNextMoveLocation();
+//      if (canMove(next)) // Try to move forward
+//      {
+//        // System.out.println("Move Forward");
+//        setLocation(next);
+//      }
+//      else
+//      {
+//        setDirection(oldDirection);
+//        turn(-sign * 90);  // Try to turn right/left
+//        next = getNextMoveLocation();
+//        if (canMove(next))
+//        {
+//          // System.out.println("Turn Right/Left");
+//          setLocation(next);
+//        }
+//        else
+//        {
+//          // System.out.println("Turn Backward");
+//          setDirection(oldDirection);
+//          turn(180);  // Turn backward
+//          next = getNextMoveLocation();
+//          setLocation(next);
+//        }
+//      }
+//    }
+    return next;
+  }
+
+  private void checkMove(Location next, double oldDirection,int sign){
     if (canMove(next))
     {
       // System.out.println("Turn Left/Right");
@@ -101,8 +155,8 @@ public abstract class Monster extends PacActor
         }
       }
     }
-    return next;
   }
+
 
   public MonsterType getType() {
     return type;

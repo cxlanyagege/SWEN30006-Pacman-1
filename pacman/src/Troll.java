@@ -11,12 +11,14 @@ public class Troll extends Monster {
 
     @Override
     protected void walkApproach() {
-        double oldDirection = getDirection();
 
-        // Walking approach:
-        // Troll: Random walk.
-        Location next = walkRandom(oldDirection);
-        game.getGameCallback().monsterLocationChanged(this);
-        addVisitedList(next);
+            double oldDirection = getDirection();
+
+            // Walking approach:
+            // Troll: Random walk.
+            Location next = walkRandom(oldDirection);
+            game.getGameCallback().monsterLocationChanged(this);
+            addVisitedList(next);
+
     }
 }

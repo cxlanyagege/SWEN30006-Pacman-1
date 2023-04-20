@@ -196,6 +196,7 @@ public class PacMan extends PacActor implements GGKeyRepeatListener
             getBackground().fillCell(location, Color.lightGray);
             game.getGameCallback().pacManEatPillsAndItems(location, "gold");
             game.removeItem("gold",location);
+            game.changeFuriousState();
         } else if (c.equals(Color.blue)) {
             getBackground().fillCell(location, Color.lightGray);
             game.getGameCallback().pacManEatPillsAndItems(location, "ice");

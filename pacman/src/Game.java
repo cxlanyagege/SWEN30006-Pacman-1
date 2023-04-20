@@ -287,6 +287,8 @@ import src.utility.GameCallback;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public abstract class Game extends GameGrid{
@@ -311,6 +313,36 @@ public abstract class Game extends GameGrid{
   protected ArrayList<Location> propertyPillLocations = new ArrayList<>();
   protected ArrayList<Location> propertyGoldLocations = new ArrayList<>();
   protected ArrayList<Location> goldLocations = new ArrayList<>();
+
+  private boolean furious = false;
+
+  public boolean isFurious(){
+    return furious;
+  }
+
+  public void setFurious(boolean furious){
+    this.furious = furious;
+  }
+
+  public void changeFuriousState() {
+    setFurious(true);
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        setFurious(false);
+      }
+    }, 3000);
+  }
+
+//  public void checkFurious(){
+//    if(furious){
+//      changeFuriousState();
+//    }
+//  }
+
+
+
 
 
   public Game(GameCallback gameCallback, Properties properties) {
@@ -358,7 +390,7 @@ public abstract class Game extends GameGrid{
 
     do {
       hasPacmanBeenHit = troll.getLocation().equals( Game.this.pacMan.getLocation()) ||
-              tx5.getLocation().equals (Game.this.pacMan.getLocation())||orion.getLocation().equals(Game.this.pacMan.getLocation())||alien.getLocation().equals( Game.this.pacMan.getLocation()) ;
+              tx5.getLocation().equals (Game.this.pacMan.getLocation())||orion.getLocation().equals(Game.this.pacMan.getLocation())||alien.getLocation().equals( Game.this.pacMan.getLocation())||wizard.getLocation().equals( Game.this.pacMan.getLocation()) ;
       hasPacmanEatAllPills = Game.this.pacMan.getNbPills() >= maxPillsAndItems;
       delay(10);
     } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
