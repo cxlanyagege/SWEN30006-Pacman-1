@@ -290,6 +290,8 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Thread.sleep;
+
 
 public abstract class Game extends GameGrid{
   protected final static int nbHorzCells = 20;
@@ -315,6 +317,7 @@ public abstract class Game extends GameGrid{
   protected ArrayList<Location> goldLocations = new ArrayList<>();
 
   private boolean furious = false;
+  private boolean frozen = false;
 
   public boolean isFurious(){
     return furious;
@@ -324,15 +327,21 @@ public abstract class Game extends GameGrid{
     this.furious = furious;
   }
 
+  public void setFrozen(boolean frozen){
+    this.frozen = frozen;
+  }
+
   public void changeFuriousState() {
-    setFurious(true);
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        setFurious(false);
-      }
-    }, 3000);
+    if (!frozen) {
+      setFurious(true);
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          setFurious(false);
+        }
+      }, 3000);
+    }
   }
 
 //  public void checkFurious(){
@@ -340,6 +349,29 @@ public abstract class Game extends GameGrid{
 //      changeFuriousState();
 //    }
 //  }
+
+  public void changeFrozenState() {
+
+    // all mobs frozen 3s
+    setFrozen(true);
+    troll.stopMoving(3);
+    tx5.stopMoving(3);
+    orion.stopMoving(3);
+    alien.stopMoving(3);
+    wizard.stopMoving(3);
+
+    // life mobs from furious state
+    setFurious(false);
+
+    // end frozen state after 3s
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        setFrozen(false);
+      }
+    }, 3000);
+  }
 
 
 
