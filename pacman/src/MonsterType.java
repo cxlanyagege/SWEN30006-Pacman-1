@@ -3,7 +3,8 @@ package src;
 public enum MonsterType {
     Troll,
     TX5,
-    Orion;
+    Orion,
+    Alien;
 
     public String getImageName() {
         switch (this) {
@@ -15,6 +16,9 @@ public enum MonsterType {
             }
             case Orion -> {
                 return "m_orion.gif";
+            }
+            case Alien -> {
+                return "m_alien.gif";
             }
             default -> {
                 assert false;
