@@ -7,17 +7,21 @@ import java.util.Random;
 
 public class Orion extends Monster {
     private final Game game;
-    private ArrayList<Location> goldLocation;
+    private final ArrayList<Location> goldLocation;
+    private Location gold;
     public Orion(Game game) {
         super(game, MonsterType.Orion);
         this.game = game;
+
+        // get all golds location
         goldLocation = game.getGoldLocation();
+
+        // pick one gold randomly
+        genRandom();
     }
 
     @Override
     protected void walkApproach() {
-        Random random = new Random();
-        Location gold = goldLocation.get(random.nextInt(goldLocation.toArray().length));
 
         double oldDirection = getDirection();
 
@@ -29,6 +33,11 @@ public class Orion extends Monster {
         if (canMove(next))
         {
             setLocation(next);
+            if (next.getX() == gold.getX() && next.getX() == gold.getY())
+            {
+                addVisitedList(next);
+                gold = genRandom();
+            }
         }
         else
         {
@@ -36,5 +45,19 @@ public class Orion extends Monster {
         }
 
         game.getGameCallback().monsterLocationChanged(this);
+    }
+
+    private Location genRandom() {
+        Random random = new Random();
+        Location randLoc = goldLocation.get(random.nextInt(goldLocation.toArray().length));
+
+        if (!isVisited(randLoc))
+        {
+            return randLoc;
+        }
+        else
+        {
+            return genRandom();
+        }
     }
 }
