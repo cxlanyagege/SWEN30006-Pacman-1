@@ -57,9 +57,14 @@ public class Orion extends Monster {
         Random random = new Random();
         Location randLoc = goldLocation.get(random.nextInt(goldLocation.size()));
 
+        // empty visited list when orion visit every gold
+        if (goldVisited.size() == goldLocation.size()) {
+            goldVisited = new ArrayList<>();
+        }
+
         if (goldVisited.size() != 0) {
             for (Location loc : goldVisited) {
-                if (loc.getX() == randLoc.getX() && loc.getY() == randLoc.getY()) {
+                if (loc.equals(randLoc)) {
                     System.out.println("Random regenerated");
                     genRandom();
                 } else {
