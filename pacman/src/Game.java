@@ -297,6 +297,8 @@ public abstract class Game extends GameGrid{
   protected PacMan pacMan = new PacMan(this);
   protected Monster troll = new Troll(this);
   protected Monster tx5 = new Tx5(this);
+  //protected Monster orion = new Orion(this);
+  //protected Monster alien = new Alien(this);
 
   protected ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
   protected ArrayList<Actor> iceCubes = new ArrayList<Actor>();
@@ -306,6 +308,7 @@ public abstract class Game extends GameGrid{
   protected int seed = 30006;
   protected ArrayList<Location> propertyPillLocations = new ArrayList<>();
   protected ArrayList<Location> propertyGoldLocations = new ArrayList<>();
+  protected ArrayList<Location> defaultGoldLocations = new ArrayList<>();
 
 
   public Game(GameCallback gameCallback, Properties properties) {
@@ -326,11 +329,13 @@ public abstract class Game extends GameGrid{
     seed = Integer.parseInt(properties.getProperty("seed")); pacMan.setSeed(seed);
     troll.setSeed(seed);
     tx5.setSeed(seed);
+    //orion.setSeed(seed);
     addKeyRepeatListener (pacMan);
     setKeyRepeatPeriod(150);
     troll.setSlowDown(3);
     tx5.setSlowDown(3); Game.this.pacMan.setSlowDown(3);
     tx5.stopMoving(5);
+    //orion.setSlowDown(3);
     setupActorLocations();
 
     //Run the game
@@ -503,8 +508,15 @@ public abstract class Game extends GameGrid{
     }
   }
 
-  public ArrayList<Location> getGoldLocation() {
+  protected ArrayList<Location> getGoldLocation() {
+    if (propertyGoldLocations.size() == 0) {
+      return defaultGoldLocations;
+    }
     return propertyGoldLocations;
+  }
+
+  protected void addDefaultGold(Location location) {
+    defaultGoldLocations.add(location);
   }
 
 }

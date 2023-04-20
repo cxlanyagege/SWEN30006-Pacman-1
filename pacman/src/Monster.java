@@ -69,7 +69,7 @@ public abstract class Monster extends PacActor
     Location next = getNextMoveLocation();
     if (canMove(next))
     {
-      System.out.println("Turn Left/Right");
+      // System.out.println("Turn Left/Right");
       setLocation(next);
     }
     else
@@ -78,7 +78,7 @@ public abstract class Monster extends PacActor
       next = getNextMoveLocation();
       if (canMove(next)) // Try to move forward
       {
-        System.out.println("Move Forward");
+        // System.out.println("Move Forward");
         setLocation(next);
       }
       else
@@ -88,12 +88,12 @@ public abstract class Monster extends PacActor
         next = getNextMoveLocation();
         if (canMove(next))
         {
-          System.out.println("Turn Right/Left");
+          // System.out.println("Turn Right/Left");
           setLocation(next);
         }
         else
         {
-          System.out.println("Turn Backward");
+          // System.out.println("Turn Backward");
           setDirection(oldDirection);
           turn(180);  // Turn backward
           next = getNextMoveLocation();

@@ -18,18 +18,19 @@ public class SimpleGame extends Game {
     protected void setupActorLocations() {
         String[] trollLocations = this.properties.getProperty("Troll.location").split(",");
         String[] tx5Locations = this.properties.getProperty("TX5.location").split(",");
-        // String[] orionLocations = this.properties.getProperty("Orion.location").split(",");
+        //String[] orionLocations = this.properties.getProperty("Orion.location").split(",");
         String[] pacManLocations = this.properties.getProperty("PacMan.location").split(",");
         int trollX = Integer.parseInt(trollLocations[0]);
         int trollY = Integer.parseInt(trollLocations[1]);
         int tx5X = Integer.parseInt(tx5Locations[0]);
         int tx5Y = Integer.parseInt(tx5Locations[1]);
-        // int orionX = Integer.parseInt(orionLocations[0]);
-        // int orionY = Integer.parseInt(orionLocations[1]);
+        //int orionX = Integer.parseInt(orionLocations[0]);
+        //int orionY = Integer.parseInt(orionLocations[1]);
         int pacManX = Integer.parseInt(pacManLocations[0]);int pacManY = Integer.parseInt(pacManLocations[1]);
-        addActor(troll, new Location(trollX, trollY), Location.NORTH);addActor(pacMan, new Location(pacManX, pacManY));addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
-
-
+        addActor(troll, new Location(trollX, trollY), Location.NORTH);
+        addActor(pacMan, new Location(pacManX, pacManY));
+        addActor(tx5, new Location(tx5X, tx5Y), Location.NORTH);
+        // addActor(orion, new Location(orionX, orionY), Location.NORTH);
     }
 
     @Override
@@ -49,10 +50,16 @@ public class SimpleGame extends Game {
                     putPill(bg, location);
                 } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
                     putGold(bg, location);
+                    addDefaultGold(location);
                 } else if (a == 4) {
                     putIce(bg, location);
                 }
             }
+        }
 
+        // draw golds that are defined in prop file
+        for (Location loc : propertyGoldLocations) {
+            putGold(bg, loc);
+        }
     }
-}}
+}
