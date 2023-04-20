@@ -20,6 +20,7 @@ public abstract class PacActor extends Actor {
   private final int listLength = 15;
   private int seed;
   protected Random randomiser = new Random();
+  public static int isFurious = 0;
 
   public PacActor(boolean isRotatable, String spriteName, int nbSprites) {
     super(isRotatable, spriteName, nbSprites);

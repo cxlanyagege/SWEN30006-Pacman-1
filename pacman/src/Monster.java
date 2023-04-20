@@ -73,10 +73,10 @@ public abstract class Monster extends PacActor
     setDirection(oldDirection);
     turn(sign * 90);  // Try to turn left/right
     Location next = getNextMoveLocation();
-    Location next2 = next.getAdjacentLocation(getLocation().getDirectionTo(next),1);
+    Location next2 = next.getAdjacentLocation(oldDirection,1);
     if(game.isFurious()){
-      checkMove(next2,oldDirection,sign);
-
+      checkMove(next,oldDirection,sign);
+      checkMove(next,oldDirection,sign);
     }else {
       checkMove(next,oldDirection,sign);
     }
