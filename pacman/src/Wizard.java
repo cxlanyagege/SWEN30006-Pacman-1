@@ -126,26 +126,24 @@ public class Wizard extends Monster {
 
     @Override
     protected void walkApproach() {
-        Location pacLocation = game.pacMan.getLocation();
-        double oldDirection = getDirection();
 
+        //double oldDirection = getDirection();
         // Walking approach:
-        // Wizard: Randomly select one of its neighbour locations (8 cells around).
+
         ArrayList<Location> neighbours = getLocation().getNeighbourLocations(1);
-        neighbours.removeIf(l -> !canMove(l, false)); // Remove locations where Wizard can't move
         if (!neighbours.isEmpty()) {
             int index = (int) (Math.random() * neighbours.size());
-            Location next = neighbours.get(index);
+            Location next = neighbours.get(index);// Wizard: Randomly select one of its neighbour locations (8 cells around).
 
             // Check if the selected location is a wall
-            if (!canMove(next, false)) {
-                Location adjacent = getLocation().getAdjacentLocation(getLocation().getDirectionTo(next));
+            if (!canMove(next)) {
+                Location adjacent = next.getAdjacentLocation(getLocation().getDirectionTo(next),1);
                 // Check if the adjacent location in the same direction is not a wall
-                if (canMove(adjacent, true)) {
+                if (canMove(adjacent)) {
                     next = adjacent;
                 } else {
-                    // If both the selected location and the adjacent location are walls, select another neighbour
-                    neighbours.remove(next);
+                    // If both the selected location and the adjacent location are walls, random select a neighbour which can move
+                    neighbours.removeIf(l -> !canMove(l));
                     index = (int) (Math.random() * neighbours.size());
                     next = neighbours.get(index);
                 }
@@ -153,24 +151,9 @@ public class Wizard extends Monster {
 
             setDirection(getLocation().getDirectionTo(next));
             setLocation(next);
-        } else {
-            setDirection(oldDirection);
         }
 
         game.getGameCallback().monsterLocationChanged(this);
     }
-
-    protected boolean canMove(Location location, boolean wallJumpAllowed) {
-        int x = location.getX();
-        int y = location.getY();
-        if (x < 0 || x >= game.getNumHorzCells() || y < 0 || y >= game.getNumVertCells()) {
-            return false; // Location is out of bounds
-        }
-        Color c = getBackground().getColor(location);
-        if (c.equals(Color.gray)) {
-            return wallJumpAllowed; // Location is a wall, move allowed only if wallJumpAllowed
-        } else {
-            return true; // Location is not a wall
-        }
-    }
 }
+

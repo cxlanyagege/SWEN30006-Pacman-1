@@ -339,6 +339,7 @@ public abstract class Game extends GameGrid{
     alien.setSlowDown(10);
     orion.setSlowDown(10);
     tx5.setSlowDown(10);
+    wizard.setSlowDown(5);
     Game.this.pacMan.setSlowDown(3);
     tx5.stopMoving(5);
     setupActorLocations();
