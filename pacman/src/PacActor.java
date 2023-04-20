@@ -17,7 +17,7 @@ public abstract class PacActor extends Actor {
   private ArrayList<Location> visitedList = new ArrayList<Location>();
   //private List<String> propertyMoves = new ArrayList<>();
   //private int propertyMoveIndex = 0;
-  private final int listLength = 10;
+  private final int listLength = 15;
   private int seed;
   protected Random randomiser = new Random();
 
