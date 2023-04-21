@@ -17,6 +17,7 @@ public class PacMan extends PacActor implements GGKeyRepeatListener
     private int score = 0;
     private List<String> propertyMoves = new ArrayList<>();
     private int propertyMoveIndex = 0;
+    private String gameTitle;
     //private final int listLength = 10;
     //private int seed;
     //private Random randomiser = new Random();
@@ -203,8 +204,13 @@ public class PacMan extends PacActor implements GGKeyRepeatListener
             game.removeItem("ice",location);
             game.changeFrozenState();
         }
-        String title = "[PacMan in the Multiverse] Current score: " + score;
-        gameGrid.setTitle(title);
+
+
+        gameGrid.setTitle(gameTitle + " Current score: " + score);
+    }
+
+    public void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
     }
 
 

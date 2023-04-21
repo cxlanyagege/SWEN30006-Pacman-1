@@ -20,7 +20,9 @@ public class MultiverseGame extends Game {
     public MultiverseGame(GameCallback gameCallback, Properties properties) {
         super(gameCallback, properties);
 
-        setTitle("[PacMan in the Multiverse]");
+        String gameTitle = "[PacMan in the Multiverse]";
+        setTitle(gameTitle);
+        pacMan.setGameTitle(gameTitle);
 
         //Setup Random seeds
         seed = Integer.parseInt(properties.getProperty("seed"));

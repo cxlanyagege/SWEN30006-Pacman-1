@@ -16,7 +16,9 @@ public class SimpleGame extends Game {
     public SimpleGame(GameCallback gameCallback, Properties properties) {
         super(gameCallback, properties);
 
-        setTitle("[PacMan Simple]");
+        String gameTitle = "[PacMan Simple]";
+        setTitle(gameTitle);
+        pacMan.setGameTitle(gameTitle);
 
         //Setup Random seeds
         seed = Integer.parseInt(properties.getProperty("seed"));
