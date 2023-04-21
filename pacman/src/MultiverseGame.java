@@ -1,5 +1,6 @@
 package src;
 
+import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.GGBackground;
 import ch.aplu.jgamegrid.Location;
 import src.utility.GameCallback;
@@ -9,9 +10,70 @@ import java.util.Properties;
 
 public class MultiverseGame extends Game {
 
+    protected Monster troll = new Troll(this);
+    protected Monster tx5 = new Tx5(this);
+    protected  Monster orion = new Orion(this);
+    protected  Monster alien = new Alien(this);
+    protected  Monster wizard = new Wizard(this);
+
 
     public MultiverseGame(GameCallback gameCallback, Properties properties) {
         super(gameCallback, properties);
+
+        setTitle("[PacMan in the Multiverse]");
+
+        //Setup Random seeds
+        seed = Integer.parseInt(properties.getProperty("seed"));
+        pacMan.setSeed(seed);
+        troll.setSeed(seed);
+        tx5.setSeed(seed);
+        orion.setSeed(seed);
+        addKeyRepeatListener (pacMan);
+        setKeyRepeatPeriod(150);
+        troll.setSlowDown(10);
+        alien.setSlowDown(10);
+        orion.setSlowDown(10);
+        tx5.setSlowDown(10);
+        wizard.setSlowDown(5);
+        pacMan.setSlowDown(3);
+        tx5.stopMoving(5);
+        setupActorLocations();
+
+        //Run the game
+        doRun();
+        show();
+
+
+        // Loop to look for collision in the application thread
+        // This makes it improbable that we miss a hit
+        boolean hasPacmanBeenHit;
+        boolean hasPacmanEatAllPills;
+        setupPillAndItemsLocations();
+        int maxPillsAndItems = countPillsAndItems();
+        do {
+            hasPacmanBeenHit = troll.getLocation().equals(pacMan.getLocation()) ||
+                    tx5.getLocation().equals (pacMan.getLocation())||orion.getLocation().equals(pacMan.getLocation())||alien.getLocation().equals(pacMan.getLocation())||wizard.getLocation().equals(pacMan.getLocation()) ;
+            hasPacmanEatAllPills = pacMan.getNbPills() >= maxPillsAndItems;
+            delay(10);
+        } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
+        delay(120);
+
+        // game ends
+        troll.setStopMoving(true);
+        tx5.setStopMoving(true);
+        orion.setStopMoving(true);
+        alien.setStopMoving(true);
+        wizard.setStopMoving(true);
+        gameStops(hasPacmanBeenHit, hasPacmanEatAllPills);
+    }
+
+    public void changeFrozenState() {
+        troll.stopMoving(3);
+        tx5.stopMoving(3);
+        orion.stopMoving(3);
+        alien.stopMoving(3);
+        wizard.stopMoving(3);
+        super.changeFrozenState();
     }
 
     @Override
@@ -44,40 +106,4 @@ public class MultiverseGame extends Game {
         addActor(pacMan, new Location(pacManX, pacManY));
 
     }
-
-//    @Override
-//    protected void drawGrid(GGBackground bg) {
-//        bg.clear(Color.gray);
-//        bg.setPaintColor(Color.white);
-//        for (int y = 0; y < nbVertCells; y++)
-//        {
-//            for (int x = 0; x < nbHorzCells; x++)
-//            {
-//                bg.setPaintColor(Color.white);
-//                Location location = new Location(x, y);
-//                int a = grid.getCell(location);
-//                if (a > 0)
-//                    bg.fillCell(location, Color.lightGray);
-//                if (a == 1 && propertyPillLocations.size() == 0) { // Pill
-//                    putPill(bg, location);
-//                } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
-//                    putGold(bg, location);
-//                } else if (a == 4) {
-//                    putIce(bg, location);
-//                }
-//            }
-//
-//        }
-//
-//        if (propertyPillLocations.size() > 0) {
-//            for (Location location : propertyPillLocations) {
-//                putPill(bg,location);
-//            }
-//        }
-//        if (propertyGoldLocations.size() > 0) {
-//            for (Location location : propertyGoldLocations) {
-//                putGold(bg,location);
-//            }
-//        }
-//    }
 }

@@ -20,11 +20,11 @@ public abstract class Game extends GameGrid{
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
   // modified
   protected PacMan pacMan = new PacMan(this);
-  protected Monster troll = new Troll(this);
-  protected Monster tx5 = new Tx5(this);
-  protected  Monster orion = new Orion(this);
-  protected  Monster alien = new Alien(this);
-  protected  Monster wizard = new Wizard(this);
+//  protected Monster troll = new Troll(this);
+//  protected Monster tx5 = new Tx5(this);
+//  protected  Monster orion = new Orion(this);
+//  protected  Monster alien = new Alien(this);
+//  protected  Monster wizard = new Wizard(this);
 
 
   protected ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
@@ -40,6 +40,7 @@ public abstract class Game extends GameGrid{
   // add two state for extensions
   private boolean furious = false;
   private boolean frozen = false;
+  private GGBackground bg;
 
 
 
@@ -51,69 +52,20 @@ public abstract class Game extends GameGrid{
     this.gameCallback = gameCallback;
     this.properties = properties;
     setSimulationPeriod(100);
-    setTitle("[PacMan in the Multiverse]");
 
     //Setup for auto test pacMan.setPropertyMoves(properties.getProperty("PacMan.move")); pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
     loadPillAndItemsLocations();
 
-    GGBackground bg = getBg();
+    bg = getBg();
     drawGrid(bg);
-
-    //Setup Random seeds
-    seed = Integer.parseInt(properties.getProperty("seed"));
-    pacMan.setSeed(seed);
-    troll.setSeed(seed);
-    tx5.setSeed(seed);
-    orion.setSeed(seed);
-    addKeyRepeatListener (pacMan);
-    setKeyRepeatPeriod(150);
-    troll.setSlowDown(10);
-    alien.setSlowDown(10);
-    orion.setSlowDown(10);
-    tx5.setSlowDown(10);
-    wizard.setSlowDown(5);
-    Game.this.pacMan.setSlowDown(3);
-    tx5.stopMoving(5);
-    setupActorLocations();
-
-    //Run the game
-    doRun();
-    show();
-
-
-    // Loop to look for collision in the application thread
-    // This makes it improbable that we miss a hit
-    boolean hasPacmanBeenHit;
-    boolean hasPacmanEatAllPills;
-    setupPillAndItemsLocations();
-    int maxPillsAndItems = countPillsAndItems();
-
-    String gameVersion = properties.getProperty("version");
-
-    if(gameVersion.equals("simple")){
-      do {
-        hasPacmanBeenHit = troll.getLocation().equals( Game.this.pacMan.getLocation()) ||
-                tx5.getLocation().equals (Game.this.pacMan.getLocation());
-        hasPacmanEatAllPills = Game.this.pacMan.getNbPills() >= maxPillsAndItems;
-        delay(10);
-      } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
-      delay(120);
-    }else{
-      do {
-        hasPacmanBeenHit = troll.getLocation().equals( Game.this.pacMan.getLocation()) ||
-                tx5.getLocation().equals (Game.this.pacMan.getLocation())||orion.getLocation().equals(Game.this.pacMan.getLocation())||alien.getLocation().equals( Game.this.pacMan.getLocation())||wizard.getLocation().equals( Game.this.pacMan.getLocation()) ;
-        hasPacmanEatAllPills = Game.this.pacMan.getNbPills() >= maxPillsAndItems;
-        delay(10);
-      } while(!hasPacmanBeenHit && !hasPacmanEatAllPills);
-      delay(120);
-    }
+  }
 
 
 
-    Location loc = Game.this.pacMan.getLocation();
-    troll.setStopMoving(true);
-    tx5.setStopMoving(true); Game.this.pacMan.removeSelf();
+  public void gameStops(boolean hasPacmanBeenHit, boolean hasPacmanEatAllPills) {
 
+    Location loc = pacMan.getLocation();
+    pacMan.removeSelf();
     String title = "";
     if (hasPacmanBeenHit) {
       bg.setPaintColor(Color.red);
@@ -128,10 +80,6 @@ public abstract class Game extends GameGrid{
 
     doPause();
   }
-
-
-
-
 
   public GameCallback getGameCallback() {
     return gameCallback;
@@ -181,11 +129,6 @@ public abstract class Game extends GameGrid{
 
     // all mobs frozen 3s
     setFrozen(true);
-    troll.stopMoving(3);
-    tx5.stopMoving(3);
-    orion.stopMoving(3);
-    alien.stopMoving(3);
-    wizard.stopMoving(3);
 
     // life mobs from furious state
     setFurious(false);
