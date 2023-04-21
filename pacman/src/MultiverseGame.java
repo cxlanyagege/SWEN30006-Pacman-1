@@ -7,6 +7,8 @@ import src.utility.GameCallback;
 
 import java.awt.*;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MultiverseGame extends Game {
 
@@ -15,6 +17,9 @@ public class MultiverseGame extends Game {
     protected  Monster orion = new Orion(this);
     protected  Monster alien = new Alien(this);
     protected  Monster wizard = new Wizard(this);
+
+    private boolean furious = false;
+    private boolean frozen = false;
 
 
     public MultiverseGame(GameCallback gameCallback, Properties properties) {
@@ -69,13 +74,40 @@ public class MultiverseGame extends Game {
         gameStops(hasPacmanBeenHit, hasPacmanEatAllPills);
     }
 
+    public void changeFuriousState() {
+        if (!frozen) {
+            setFurious(true);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    setFurious(false);
+                }
+            }, 3000);
+        }
+    }
+
     public void changeFrozenState() {
+
+        // all mobs frozen 3s
         troll.stopMoving(3);
         tx5.stopMoving(3);
         orion.stopMoving(3);
         alien.stopMoving(3);
         wizard.stopMoving(3);
-        super.changeFrozenState();
+        setFrozen(true);
+
+        // life mobs from furious state
+        setFurious(false);
+
+        // end frozen state after 3s
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setFrozen(false);
+            }
+        }, 3000);
     }
 
     @Override

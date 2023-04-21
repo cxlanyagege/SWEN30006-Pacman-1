@@ -56,8 +56,12 @@ public abstract class Game extends GameGrid{
     //Setup for auto test pacMan.setPropertyMoves(properties.getProperty("PacMan.move")); pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
     loadPillAndItemsLocations();
 
+    // draw background and grid
     bg = getBg();
     drawGrid(bg);
+
+    // determine auto testing
+    pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
   }
 
 
@@ -108,43 +112,11 @@ public abstract class Game extends GameGrid{
     this.frozen = frozen;
   }
 
-  // set furious state = true for 3s
   public void changeFuriousState() {
-    if (!frozen) {
-      setFurious(true);
-      Timer timer = new Timer();
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          setFurious(false);
-        }
-      }, 3000);
-    }
   }
-
-
-  // set furious state = true for 3s
 
   public void changeFrozenState() {
-
-    // all mobs frozen 3s
-    setFrozen(true);
-
-    // life mobs from furious state
-    setFurious(false);
-
-    // end frozen state after 3s
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        setFrozen(false);
-      }
-    }, 3000);
   }
-
-
-
 
   // abstract method, will implement by child class
   protected abstract void setupActorLocations();
