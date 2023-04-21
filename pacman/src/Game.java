@@ -8,10 +8,6 @@ import src.utility.GameCallback;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
 
 
 public abstract class Game extends GameGrid{
@@ -53,7 +49,7 @@ public abstract class Game extends GameGrid{
     this.properties = properties;
     setSimulationPeriod(100);
 
-    //Setup for auto test pacMan.setPropertyMoves(properties.getProperty("PacMan.move")); pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
+    //Setup for auto test
     loadPillAndItemsLocations();
 
     // draw background and grid
@@ -62,6 +58,7 @@ public abstract class Game extends GameGrid{
 
     // determine auto testing
     pacMan.setAuto(Boolean.parseBoolean(properties.getProperty("PacMan.isAuto")));
+    pacMan.setPropertyMoves(properties.getProperty("PacMan.move"));
   }
 
 
