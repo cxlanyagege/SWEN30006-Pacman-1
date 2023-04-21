@@ -22,7 +22,13 @@ public class Tx5 extends Monster {
         setDirection(compassDir);
         if (!isVisited(next) && canMove(next))
         {
-            setLocation(next);
+            if(game.isFurious()){
+                checkMove(next,compassDir.getDirection(),1);
+                checkMove(next,compassDir.getDirection(),1);
+            }else{
+                setLocation(next);
+            }
+
         }
         else
         {

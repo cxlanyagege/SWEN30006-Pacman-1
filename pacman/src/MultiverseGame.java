@@ -45,28 +45,39 @@ public class MultiverseGame extends Game {
 
     }
 
-    @Override
-    protected void drawGrid(GGBackground bg) {
-        bg.clear(Color.gray);
-        bg.setPaintColor(Color.white);
-        for (int y = 0; y < nbVertCells; y++)
-        {
-            for (int x = 0; x < nbHorzCells; x++)
-            {
-                bg.setPaintColor(Color.white);
-                Location location = new Location(x, y);
-                int a = grid.getCell(location);
-                if (a > 0)
-                    bg.fillCell(location, Color.lightGray);
-                if (a == 1 && propertyPillLocations.size() == 0) { // Pill
-                    putPill(bg, location);
-                } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
-                    putGold(bg, location);
-                } else if (a == 4) {
-                    putIce(bg, location);
-                }
-            }
-
-        }
-    }
+//    @Override
+//    protected void drawGrid(GGBackground bg) {
+//        bg.clear(Color.gray);
+//        bg.setPaintColor(Color.white);
+//        for (int y = 0; y < nbVertCells; y++)
+//        {
+//            for (int x = 0; x < nbHorzCells; x++)
+//            {
+//                bg.setPaintColor(Color.white);
+//                Location location = new Location(x, y);
+//                int a = grid.getCell(location);
+//                if (a > 0)
+//                    bg.fillCell(location, Color.lightGray);
+//                if (a == 1 && propertyPillLocations.size() == 0) { // Pill
+//                    putPill(bg, location);
+//                } else if (a == 3 && propertyGoldLocations.size() == 0) { // Gold
+//                    putGold(bg, location);
+//                } else if (a == 4) {
+//                    putIce(bg, location);
+//                }
+//            }
+//
+//        }
+//
+//        if (propertyPillLocations.size() > 0) {
+//            for (Location location : propertyPillLocations) {
+//                putPill(bg,location);
+//            }
+//        }
+//        if (propertyGoldLocations.size() > 0) {
+//            for (Location location : propertyGoldLocations) {
+//                putGold(bg,location);
+//            }
+//        }
+//    }
 }

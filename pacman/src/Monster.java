@@ -120,7 +120,7 @@ public abstract class Monster extends PacActor
     return next;
   }
 
-  private void checkMove(Location next, double oldDirection,int sign){
+  protected void checkMove(Location next, double oldDirection,int sign){
     if (canMove(next))
     {
       // System.out.println("Turn Left/Right");
