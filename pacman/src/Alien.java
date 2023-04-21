@@ -18,6 +18,7 @@ public class Alien extends Monster {
     protected void walkApproach() {
         Location pacLocation = game.pacMan.getLocation();
         double oldDirection = getDirection();
+        Location next = null;
 
         // Walking approach:
         // Alien: Calculate distance to PacMan for each neighbouring location and move to the closest one.
@@ -27,9 +28,24 @@ public class Alien extends Monster {
         neighbours.sort(Comparator.comparingDouble(l -> l.getDistanceTo(pacLocation)));
 
         if (!neighbours.isEmpty()) {
-            Location next = neighbours.get(0);
-            setDirection(getLocation().getDirectionTo(next));
-            setLocation(next);
+            next = neighbours.get(0);
+            if (!game.isFurious()) {
+                setDirection(getLocation().getDirectionTo(next));
+                setLocation(next);
+            } else {//if furious
+                int i = 0;
+                while (i < neighbours.size()) {
+                    Location next2 = next.getAdjacentLocation(getLocation().getDirectionTo(next), 1);
+                    if (canMove(next2)) {
+                        setDirection(getLocation().getDirectionTo(next2));
+                        setLocation(next2);
+                        break;
+                    } else {//if 2 step cannot move, choose another neighbor
+                        i++;
+                        next = neighbours.get(i);
+                    }
+                }
+            }
         } else {
             setDirection(oldDirection);
         }
@@ -37,3 +53,6 @@ public class Alien extends Monster {
         game.getGameCallback().monsterLocationChanged(this);
     }
 }
+
+
+
