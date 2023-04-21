@@ -1,11 +1,19 @@
+/*
+ *  Team Name: monday-16-15-team-04
+ *  Team Member:
+ *               Xinyi Yuan
+ *               He Shen
+ *               Yuchen Dong
+ */
+
+
 package src;
 
-import ch.aplu.jgamegrid.Actor;
-import ch.aplu.jgamegrid.GGBackground;
+
 import ch.aplu.jgamegrid.Location;
 import src.utility.GameCallback;
 
-import java.awt.*;
+
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;

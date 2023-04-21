@@ -1,4 +1,10 @@
-
+/*
+ *  Team Name: monday-16-15-team-04
+ *  Team Member:
+ *               Xinyi Yuan
+ *               He Shen
+ *               Yuchen Dong
+ */
 
 package src;
 
@@ -16,11 +22,6 @@ public abstract class Game extends GameGrid{
   protected PacManGameGrid grid = new PacManGameGrid(nbHorzCells, nbVertCells);
   // modified
   protected PacMan pacMan = new PacMan(this);
-//  protected Monster troll = new Troll(this);
-//  protected Monster tx5 = new Tx5(this);
-//  protected  Monster orion = new Orion(this);
-//  protected  Monster alien = new Alien(this);
-//  protected  Monster wizard = new Wizard(this);
 
 
   protected ArrayList<Location> pillAndItemLocations = new ArrayList<Location>();
@@ -158,7 +159,7 @@ public abstract class Game extends GameGrid{
 
   protected void loadPillAndItemsLocations() {
     String pillsLocationString = properties.getProperty("Pills.location");
-    System.out.println(pillsLocationString);
+
     if (pillsLocationString != null) {
       String[] singlePillLocationStrings = pillsLocationString.split(";");
       for (String singlePillLocationString : singlePillLocationStrings) {
@@ -168,7 +169,7 @@ public abstract class Game extends GameGrid{
     }
 
     String goldLocationString = properties.getProperty("Gold.location");
-    //System.out.println(goldLocationString);
+
     if (goldLocationString != null) {
       String[] singleGoldLocationStrings = goldLocationString.split(";");
       for (String singleGoldLocationString : singleGoldLocationStrings) {
@@ -179,8 +180,7 @@ public abstract class Game extends GameGrid{
   }
 
   protected void setupPillAndItemsLocations() {
-    System.out.println(propertyPillLocations.size());
-    System.out.println(propertyGoldLocations.size());
+
     for (int y = 0; y < nbVertCells; y++) {
       for (int x = 0; x < nbHorzCells; x++) {
         Location location = new Location(x, y);
@@ -191,7 +191,7 @@ public abstract class Game extends GameGrid{
         if (a == 3 && propertyGoldLocations.size() == 0) {
           pillAndItemLocations.add(location);
           goldLocations.add(location);
-          System.out.println(goldLocations);
+
         }
         if (a == 4) {
           pillAndItemLocations.add(location);

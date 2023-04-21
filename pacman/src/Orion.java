@@ -1,9 +1,20 @@
+/*
+*  Team Name: monday-16-15-team-04
+*  Team Member:
+*               Xinyi Yuan
+*               He Shen
+*               Yuchen Dong
+*/
+
+
+
 package src;
 
 import ch.aplu.jgamegrid.Location;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class Orion extends Monster {
     private final Game game;
@@ -81,12 +92,12 @@ public class Orion extends Monster {
                     System.out.println("Random regenerated");
                     genRandom();
                 } else {
-                    System.out.println("Locate next random gold");
+
                     gold = randLoc;
                 }
             }
         } else {
-            System.out.println("Locate first random gold");
+
             gold = randLoc;
         }
     }

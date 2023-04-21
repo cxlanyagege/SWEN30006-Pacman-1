@@ -1,3 +1,12 @@
+/*
+ *  Team Name: monday-16-15-team-04
+ *  Team Member:
+ *               Xinyi Yuan
+ *               He Shen
+ *               Yuchen Dong
+ */
+
+
 // PacMan.java
 // Used for PacMan
 package src;
@@ -18,9 +27,7 @@ public class PacMan extends PacActor implements GGKeyRepeatListener
     private List<String> propertyMoves = new ArrayList<>();
     private int propertyMoveIndex = 0;
     private String gameTitle;
-    //private final int listLength = 10;
-    //private int seed;
-    //private Random randomiser = new Random();
+
     public PacMan(Game game)
     {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
@@ -167,17 +174,8 @@ public class PacMan extends PacActor implements GGKeyRepeatListener
         eatPill(next);
         addVisitedList(next);
     }
-/*
-    private boolean canMove(Location location)
-    {
-        Color c = getBackground().getColor(location);
-        if ( c.equals(Color.gray) || location.getX() >= game.getNumHorzCells()
-                || location.getX() < 0 || location.getY() >= game.getNumVertCells() || location.getY() < 0)
-            return false;
-        else
-            return true;
-    }
-*/
+
+
     public int getNbPills() {
         return nbPills;
     }
